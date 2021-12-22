@@ -130,7 +130,7 @@ OAuth.registerService('linkedin', 2, null, query => {
     fields.email = primaryEmail;
   }
 
-  _.extend(serviceData, fields);
+  Object.assign(serviceData, fields);
 
   return {
     serviceData,

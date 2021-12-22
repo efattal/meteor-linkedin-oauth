@@ -2,9 +2,7 @@ Linkedin = {};
 
 // Request LinkedIn credentials for the user
 // @param options {optional}
-// @param credentialRequestCompleteCallback {Function} Callback function to call on
-//   completion. Takes one argument, credentialToken on success, or Error on
-//   error.
+// @param credentialRequestCompleteCallback {Function} Callback function to call on completion. Takes one argument, credentialToken on success, or Error on error.
 Linkedin.requestCredential = function(options, credentialRequestCompleteCallback) {
   // support both (options, callback) and (callback).
   if (!credentialRequestCompleteCallback && typeof options === 'function') {
