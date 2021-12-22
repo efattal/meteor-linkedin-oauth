@@ -1,13 +1,9 @@
 Package.describe({
   name: 'codifytools:linkedin-oauth',
-  version: '0.0.1',
-  // Brief, one-line summary of the package.
+  version: '1.0.2',
   summary: 'Linkedin OAuth flow',
-  // URL to the Git repository containing the source code for this package.
-  git: '',
-  // By default, Meteor will default to using README.md for documentation.
-  // To avoid submitting documentation, set this field to null.
-  documentation: 'README.md'
+  git: 'https://github.com/codifytools/meteor-linkedin-oauth',
+  documentation: null
 });
 
 Package.onUse(function(api) {
@@ -15,7 +11,7 @@ Package.onUse(function(api) {
   api.use('ecmascript');
   api.use('oauth2', ['client', 'server']);
   api.use('oauth', ['client', 'server']);
-  api.use('http', 'server');
+  api.use('http@1.4.4 || 2.0.0', 'server');
   api.use('underscore', 'server');
   api.use('random', 'client');
   api.use('service-configuration', ['client', 'server']);
