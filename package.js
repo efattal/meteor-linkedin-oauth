@@ -1,6 +1,6 @@
 Package.describe({
   name: 'codifytools:linkedin-oauth',
-  version: '1.0.2',
+  version: '1.0.3',
   summary: 'Linkedin OAuth flow',
   git: 'https://github.com/codifytools/meteor-linkedin-oauth',
   documentation: null
