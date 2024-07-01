@@ -1,35 +1,5 @@
 Linkedin = {};
 
-const getImage = (profilePicture) => {
-  const image = [];
-
-  if (profilePicture !== undefined){
-    for (const element of profilePicture['displayImage~'].elements) {
-      for (const identifier of element.identifiers) {
-        image.push(identifier.identifier);
-      }
-    }
-  }
-
-  return {
-    displayImage: profilePicture ? profilePicture.displayImage : null,
-    identifiersUrl: image
-  };
-}
-
-// Request for email, returns array
-const getEmails = (accessToken) => {
-  const url = encodeURI(`https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))&oauth2_access_token=${accessToken}`);
-  const response = HTTP.get(url).data;
-  const emails = [];
-
-  for (const element of response.elements) {
-    emails.push(element['handle~'].emailAddress);
-  }
-
-  return emails;
-};
-
 // checks whether a string parses as JSON
 const isJSON = (str) => {
   try {
@@ -90,7 +60,7 @@ const getTokenResponse = (query) => {
 // Request available fields from r_liteprofile
 const getIdentity = (accessToken) => {
   try {
-    const url = encodeURI(`https://api.linkedin.com/v2/userinfo?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=${accessToken}`);
+    const url = encodeURI(`https://api.linkedin.com/v2/userinfo?oauth2_access_token=${accessToken}`);
     return HTTP.get(url).data;
   } catch (err) {
     throw new Error(`Failed to fetch identity from Linkedin. ${err.message}`);
@@ -102,33 +72,27 @@ OAuth.registerService('linkedin', 2, null, query => {
   const { accessToken } = response;
   const identity = getIdentity(accessToken);
 
-  const { id, firstName, lastName, profilePicture } = identity;
+  const { sub, name, given_name, family_name, picture, email, email_verified } = identity;
 
-  if (!id) {
+  if (!sub) {
     throw new Error('Linkedin did not provide an id');
   }
 
   const serviceData = {
-    id,
+    id: sub,
     accessToken,
     expiresAt: +new Date() + 1000 * response.expiresIn,
   };
 
-  const emails = getEmails(accessToken);
-
   const fields = {
-    linkedinId: id,
-    firstName,
-    lastName,
-    profilePicture: getImage(profilePicture),
-    emails
+    name,
+    firstName: given_name,
+    lastName: family_name,
+    picture,
+    email,
+    verified_email: email_verified
   };
 
-  if (emails.length) {
-    const primaryEmail = emails[0];
-    fields.emailAddress = primaryEmail; // for backward compatibility with previous versions of this package
-    fields.email = primaryEmail;
-  }
 
   Object.assign(serviceData, fields);
 
