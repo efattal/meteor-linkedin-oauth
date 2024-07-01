@@ -28,7 +28,7 @@ Linkedin.requestCredential = function(options, credentialRequestCompleteCallback
     scope = requestPermissions.join('+');
   } else {
     // If extra permissions not passed, we need to request basic, available to all
-    scope = 'r_emailaddress+r_liteprofile';
+    scope = 'email+profile';
   }
 
   const loginStyle = OAuth._loginStyle('linkedin', config, options);

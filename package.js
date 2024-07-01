@@ -1,8 +1,8 @@
 Package.describe({
-  name: 'codifytools:linkedin-oauth',
+  name: 'efattal:linkedin-oauth',
   version: '1.0.4',
   summary: 'Linkedin OAuth flow',
-  git: 'https://github.com/codifytools/meteor-linkedin-oauth',
+  git: 'https://github.com/efattal/meteor-linkedin-oauth',
   documentation: null
 });
 

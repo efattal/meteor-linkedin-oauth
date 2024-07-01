@@ -90,7 +90,7 @@ const getTokenResponse = (query) => {
 // Request available fields from r_liteprofile
 const getIdentity = (accessToken) => {
   try {
-    const url = encodeURI(`https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=${accessToken}`);
+    const url = encodeURI(`https://api.linkedin.com/v2/userinfo?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=${accessToken}`);
     return HTTP.get(url).data;
   } catch (err) {
     throw new Error(`Failed to fetch identity from Linkedin. ${err.message}`);
